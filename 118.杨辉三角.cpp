@@ -13,35 +13,21 @@ public:
   vector<vector<int>> generate(int numRows)
   {
     vector<vector<int>> res;
-    // int c = 0;
-    // vector<int> temp;
-    // for (int r = 0; r < numRows; r++)
-    // {
-    //   if (c == 0 || c == r)
-    //   {
-    //     temp.push_back(1);
-    //   }
-    //   else
-    //   {
-    //     temp.push_back(res[r - 1][c - 1] + res[r - 1][c]);
-    //   }
-
-    //   if (c++ == r)
-    //   {
-    //     res.push_back(temp);
-    //     vector<int> emptyNums;
-    //     temp = emptyNums;
-    //     c = 0;
-    //   }
-    // }
-    for (int i = 0; i < numRows; i++)
+    for (int r = 0; r < numRows; r++)
     {
-      vector<int> row(i + 1, 1);
-      for (int j = 1; j < i; j++)
+      vector<int> temp;
+      for (int c = 0; c <= r; c++)
       {
-        row[j] = res[i - 1][j] + res[i - 1][j - 1];
+        if (c == 0 || c == r)
+        {
+          temp.push_back(1);
+        }
+        else
+        {
+          temp.push_back(res[r - 1][c - 1] + res[r - 1][c]);
+        }
       }
-      res.push_back(row);
+      res.push_back(temp);
     }
     return res;
   }
@@ -49,7 +35,9 @@ public:
 
 // int main()
 // {
-//   (new Solution())->generate(5);
+//   vector<vector<int>> x = ((new Solution())->generate(5));
+//   printf("%d\n", x[2][1]);
 //   return 0;
 // }
+
 // @lc code=end
