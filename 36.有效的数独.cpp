@@ -41,6 +41,7 @@ public:
       /* code */
       for (int row = 0; row < 9; row++)
       {
+        
         /* code */
         if (board[row][col] != '.')
         {
