@@ -47,8 +47,36 @@ public:
 
   vector<int> preorderTraversal(TreeNode *root)
   {
-    postorder(root);
+    // 递归
+    // postorder(root);
+
+    // 非递归
+    if (root == nullptr)
+    {
+      return res;
+    }
+
+    stack<TreeNode *> nodeSt;
+    nodeSt.push(root);
+    
+    while (!nodeSt.empty())
+    {
+      TreeNode *cur = nodeSt.top();
+      nodeSt.pop();
+      res.push_back(cur->val);
+
+      if (cur->right != nullptr)
+      {
+        nodeSt.push(cur->right);
+      }
+
+      if (cur->left != nullptr)
+      {
+        nodeSt.push(cur->left);
+      }
+    }
     return res;
   }
 };
+
 // @lc code=end
