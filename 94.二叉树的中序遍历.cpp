@@ -33,22 +33,55 @@ class Solution
 public:
   vector<int> res;
 
-  void postorder(TreeNode *root)
+  void recursionInOrder(TreeNode *root)
   {
-
     if (root == nullptr)
     {
       return;
     }
-    postorder(root->left);
+    recursionInOrder(root->left);
     res.push_back(root->val);
-    postorder(root->right);
+    recursionInOrder(root->right);
   }
 
   vector<int> inorderTraversal(TreeNode *root)
   {
-    postorder(root);
-    return res;
-  }
-};
-// @lc code=end
+    // 递归
+    // recursionInOrder(root);
+
+    // 非递归
+    stack<TreeNode *> nodeSt;
+
+    while (root != nullptr || !nodeSt.empty())
+    {
+      /* code */
+      while (root != nullptr)
+      {
+        nodeSt.push(root);
+        root = root->left;
+      }
+
+      if (!nodeSt.empty())
+      {
+        root = nodeSt.top();
+        nodeSt.pop();
+        res.push_back(root->val);
+      }
+
+      if (root->right != nullptr)
+      {
+        nodeSt.push(root->right);
+        root = root->right;
+      }
+      
+      return res;
+    }
+  };
+
+  // int main()
+  // {
+  //   TreeNode *root = new TreeNode(1, nullptr, new TreeNode(2, new TreeNode(3), nullptr));
+  //   (new Solution)->inorderTraversal(root);
+  // }
+
+  // @lc code=end
