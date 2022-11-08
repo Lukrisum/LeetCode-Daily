@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=145 lang=cpp
+ * @lc app=leetcode.cn id=101 lang=cpp
  *
- * [145] 二叉树的后序遍历
+ * [101] 对称二叉树
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,50 +31,35 @@ struct TreeNode
 class Solution
 {
 public:
-  vector<int> res;
-
-  void postorder(TreeNode *root)
+  bool dfs(TreeNode *leftNode, TreeNode *rightNode)
   {
 
-    if (root == nullptr)
+    if (leftNode == nullptr && rightNode == nullptr)
     {
-      return;
+      return true;
     }
-    postorder(root->left);
-    postorder(root->right);
-    res.push_back(root->val);
+
+    if (leftNode == nullptr || rightNode == nullptr)
+    {
+      return false;
+    }
+
+    if (leftNode->val != rightNode->val)
+    {
+      return false;
+    }
+
+    return dfs(leftNode->left, rightNode->right)&dfs(leftNode->right, rightNode->left);
   }
 
-  vector<int> postorderTraversal(TreeNode *root)
+  bool isSymmetric(TreeNode *root)
   {
-    // 递归
-    // postorder(root);
-
-    // 非递归
     if (root == nullptr)
     {
-      return res;
+      return true;
     }
-
-    stack<TreeNode *> nodeSt;
-    nodeSt.push(root);
-
-    while (!nodeSt.empty())
-    {
-      root = nodeSt.top();
-      nodeSt.pop();
-
-      res.push_back(root->val);
-
-      if (root->left)
-        nodeSt.push(root->left);
-      if (root->right)
-        nodeSt.push(root->right);
-    }
-
-    reverse(res.begin(), res.end());
-
-    return res;
+    return dfs(root->left, root->right);
   }
 };
+
 // @lc code=end

@@ -57,6 +57,7 @@ public:
       /* code */
       while (root != nullptr)
       {
+        /* code */
         nodeSt.push(root);
         root = root->left;
       }
@@ -66,22 +67,18 @@ public:
         root = nodeSt.top();
         nodeSt.pop();
         res.push_back(root->val);
-      }
-
-      if (root->right != nullptr)
-      {
-        nodeSt.push(root->right);
         root = root->right;
       }
-      
-      return res;
     }
+
+    return res;
   };
+};
 
-  // int main()
-  // {
-  //   TreeNode *root = new TreeNode(1, nullptr, new TreeNode(2, new TreeNode(3), nullptr));
-  //   (new Solution)->inorderTraversal(root);
-  // }
+// int main()
+// {
+//   TreeNode *root = new TreeNode(1, nullptr, new TreeNode(2, new TreeNode(3), nullptr));
+//   (new Solution)->inorderTraversal(root);
+// }
 
-  // @lc code=end
+// @lc code=end
