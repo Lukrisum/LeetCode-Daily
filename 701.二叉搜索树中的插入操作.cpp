@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=112 lang=cpp
+ * @lc app=leetcode.cn id=701 lang=cpp
  *
- * [112] 路径总和
+ * [701] 二叉搜索树中的插入操作
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +15,6 @@ struct TreeNode
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -30,55 +29,43 @@ struct TreeNode
  */
 class Solution
 {
-
 public:
-  int target;
-  int sum = 0;
-  bool res = false;
-
-  void dfs(TreeNode *root)
+  void insert(TreeNode *root, int target)
   {
 
-    if (root->left == nullptr && root->right == nullptr)
+    if (root->val > target)
     {
-      sum += root->val;
-
-      if (sum == target)
+      if (root->left)
       {
-        res = true;
+        insert(root->left, target);
       }
-
-      sum -= root->val;
-      return;
+      else
+      {
+        root->left = new TreeNode(target);
+      }
     }
-
-    if (root->left)
+    else if (root->val <= target)
     {
-      sum += root->val;
-      dfs(root->left);
-      sum -= root->val;
-    }
-
-    if (root->right)
-    {
-      sum += root->val;
-      dfs(root->right);
-      sum -= root->val;
+      if (root->right)
+      {
+        insert(root->right, target);
+      }
+      else
+      {
+        root->right = new TreeNode(target);
+      }
     }
   }
 
-  bool hasPathSum(TreeNode *root, int targetSum)
+  TreeNode *insertIntoBST(TreeNode *root, int val)
   {
     if (root == nullptr)
     {
-      return false;
+      root = new TreeNode(val);
+      return root;
     }
-
-    target = targetSum;
-
-    dfs(root);
-
-    return res;
+    insert(root, val);
+    return root;
   }
 };
 

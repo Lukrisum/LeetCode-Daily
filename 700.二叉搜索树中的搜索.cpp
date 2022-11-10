@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=112 lang=cpp
+ * @lc app=leetcode.cn id=700 lang=cpp
  *
- * [112] 路径总和
+ * [700] 二叉搜索树中的搜索
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -30,53 +30,24 @@ struct TreeNode
  */
 class Solution
 {
-
 public:
-  int target;
-  int sum = 0;
-  bool res = false;
-
-  void dfs(TreeNode *root)
+  TreeNode *searchBST(TreeNode *root, int val)
   {
+    TreeNode *res;
 
-    if (root->left == nullptr && root->right == nullptr)
+    if (root == nullptr || root->val == val)
     {
-      sum += root->val;
-
-      if (sum == target)
-      {
-        res = true;
-      }
-
-      sum -= root->val;
-      return;
+      return root;
     }
 
-    if (root->left)
+    if (root->val > val)
     {
-      sum += root->val;
-      dfs(root->left);
-      sum -= root->val;
+      res = searchBST(root->left, val);
     }
-
-    if (root->right)
+    else if (root->val < val)
     {
-      sum += root->val;
-      dfs(root->right);
-      sum -= root->val;
+      res = searchBST(root->right, val);
     }
-  }
-
-  bool hasPathSum(TreeNode *root, int targetSum)
-  {
-    if (root == nullptr)
-    {
-      return false;
-    }
-
-    target = targetSum;
-
-    dfs(root);
 
     return res;
   }
