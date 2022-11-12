@@ -57,13 +57,25 @@ public:
     }
   }
 
+  int findDepth(TreeNode *root, int depth)
+  {
+    if (root == nullptr)
+    {
+      return depth - 1;
+    }
+
+    return max(findDepth(root->left, depth + 1), findDepth(root->right, depth + 1));
+  }
+
   int maxDepth(TreeNode *root)
   {
     // 递归法
     if (root == NULL)
       return 0;
-    getDepth(root, 1);
-    return result;
+    // getDepth(root, 1);
+    // return result;
+    return findDepth(root, 1);
+
     // 迭代法
     // vector<vector<int>> res;
     // if (root == nullptr)
