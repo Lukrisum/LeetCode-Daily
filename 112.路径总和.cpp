@@ -32,53 +32,42 @@ class Solution
 {
 
 public:
-  int target;
-  int sum = 0;
-  bool res = false;
-
-  void dfs(TreeNode *root)
-  {
-
-    if (root->left == nullptr && root->right == nullptr)
-    {
-      sum += root->val;
-
-      if (sum == target)
-      {
-        res = true;
-      }
-
-      sum -= root->val;
-      return;
-    }
-
-    if (root->left)
-    {
-      sum += root->val;
-      dfs(root->left);
-      sum -= root->val;
-    }
-
-    if (root->right)
-    {
-      sum += root->val;
-      dfs(root->right);
-      sum -= root->val;
-    }
-  }
-
-  bool hasPathSum(TreeNode *root, int targetSum)
+  bool dfs(TreeNode *root, int sum, int target)
   {
     if (root == nullptr)
     {
       return false;
     }
 
-    target = targetSum;
+    if (root->left == nullptr && root->right == nullptr)
+    {
+      sum += root->val;
+      if (sum != target)
+      {
+        return false;
+      }
+      return true;
+    }
 
-    dfs(root);
+    bool leftRes = false;
+    bool rightRes = false;
 
-    return res;
+    if (root->left)
+    {
+      leftRes = dfs(root->left, sum + root->val, target);
+    }
+
+    if (root->right)
+    {
+      rightRes = dfs(root->right, sum + root->val, target);
+    }
+
+    return leftRes || rightRes;
+  }
+
+  bool hasPathSum(TreeNode *root, int targetSum)
+  {
+    return dfs(root, 0, targetSum);
   }
 };
 
