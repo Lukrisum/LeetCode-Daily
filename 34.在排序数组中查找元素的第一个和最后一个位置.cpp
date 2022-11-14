@@ -24,10 +24,12 @@ public:
     if (nums[middle] < target)
     {
       left = middle + 1;
+      return searchIt(nums, target, left, right, flag);
     }
     else if (nums[middle] > target)
     {
       right = middle - 1;
+      return searchIt(nums, target, left, right, flag);
     }
     else
     {
@@ -45,8 +47,6 @@ public:
         return MIN == -1 ? middle : MIN;
       }
     }
-
-    return searchIt(nums, target, left, right, flag);
   }
 
   vector<int> searchRange(vector<int> &nums, int target)
