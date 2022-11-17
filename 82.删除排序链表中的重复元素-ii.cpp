@@ -27,33 +27,34 @@ struct ListNode
 class Solution
 {
 public:
-  // 1. 递归定义
   ListNode *deleteDuplicates(ListNode *head)
   {
-
-    // 2. 结束条件
-    if (head == nullptr || head->next == nullptr)
+    ListNode *dummy = new ListNode(0);
+    dummy->next = head;
+    ListNode *pre = dummy;
+    ListNode *cur = head;
+    while (cur != nullptr)
     {
-      return head;
-    }
-
-    // 3. 递归的等价逻辑
-    ListNode *res;
-    if (head->val == head->next->val)
-    {
-      ListNode *move = head->next;
-      while (move->next && move->val == move->next->val)
+      while (cur->next && cur->val == cur->next->val)
       {
-        move = move->next;
+        cur = cur->next;
       }
-      res = deleteDuplicates(move->next);
+      // cur 前进了
+      if (pre->next != cur)
+      {
+        // 删除重复项
+        pre->next = cur->next;
+
+        // 完成操作，pre 前往下一节点
+      }
+      else
+      {
+        // 无重复项，pre 前往下一节点
+        pre = pre->next;
+      }
+      cur = cur->next;
     }
-    else
-    {
-      res = head;
-      res->next = deleteDuplicates(head->next);
-    }
-    return res;
+    return dummy->next;
   }
 };
 
