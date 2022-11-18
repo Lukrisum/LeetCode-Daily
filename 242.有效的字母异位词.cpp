@@ -11,25 +11,19 @@ class Solution
 public:
   bool isAnagram(string s, string t)
   {
+    // 微调一下：少一次循环
+
     if (s.length() != t.length())
     {
       return false;
     }
+
     int some[26] = {0};
 
     for (auto &&c : s)
     {
       some[c - 'a']++;
-    }
-
-    for (auto &&c : t)
-    {
-      some[c - 'a']--;
-    }
-
-    for (auto &&c : s)
-    {
-      if (some[c - 'a'] != 0)
+      if (some[c - 'a'] < 0)
       {
         return false;
       }
