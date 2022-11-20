@@ -12,6 +12,7 @@ class Solution
 public:
   int minSubArrayLen(int target, vector<int> &nums)
   {
+
     int minLen = 0;
     int right = 0;
     int sum = 0;
@@ -19,34 +20,30 @@ public:
     for (int left = 0; left < nums.size(); left++)
     {
 
-      sum += nums[left];
-
       while (sum < target && right < nums.size())
       {
-        if (right == left)
-        {
-          right++;
-        }
-
-        if (right < nums.size())
-        {
-          sum += nums[right++];
-        }
+        sum += nums[right];
+        right++;
       }
-
+      
       if (sum >= target)
       {
-        int tempLen = right - left + 1;
-        if (minLen == 0 || minLen > tempLen)
+        int len = (right - 1) - left + 1;
+        if (minLen == 0)
         {
-          minLen = tempLen;
+          minLen = len;
         }
-        sum -= nums[left];
+        else
+        {
+          minLen = min(len, minLen);
+        }
       }
       else
       {
-        break;
+        return minLen;
       }
+
+      sum -= nums[left];
     }
 
     return minLen;
