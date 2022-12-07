@@ -16,31 +16,27 @@ public:
     int right = 0;
     int sum = 0;
 
-    for (int left = 0; left < nums.size() - 1; left++)
+    for (int left = 0; left < nums.size(); left++)
     {
-      sum += nums[left];
-
-      while (sum < target && right < nums.size() - 1)
+      while (sum < target && right < nums.size())
       {
-        if (right == left)
-        {
-          if (right == nums.size() - 1)
-          {
-            return minLen;
-          }
-          right++;
-        }
-        sum += nums[right++];
+        sum += nums[right];
+        right++;
       }
 
       if (sum >= target)
       {
-        int tempMin = (right - 1) - left + 1;
-        minLen = (minLen == 0 ? tempMin : min(tempMin, minLen));
+        int len = right - left;
+        minLen = minLen == 0 ? len : min(len, minLen);
+      }
+      else
+      {
+        return minLen;
       }
 
       sum -= nums[left];
     }
+
     return minLen;
   }
 };
