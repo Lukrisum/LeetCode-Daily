@@ -5,14 +5,14 @@
  */
 #include <bits/stdc++.h>
 using namespace std;
-struct ListNode
-{
-  int val;
-  ListNode *next;
-  ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
+// struct ListNode
+// {
+//   int val;
+//   ListNode *next;
+//   ListNode() : val(0), next(nullptr) {}
+//   ListNode(int x) : val(x), next(nullptr) {}
+//   ListNode(int x, ListNode *next) : val(x), next(next) {}
+// };
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -31,29 +31,30 @@ public:
   {
     ListNode *dummy = new ListNode(0);
     dummy->next = head;
+
     ListNode *pre = dummy;
     ListNode *cur = head;
+
     while (cur != nullptr)
     {
-      while (cur->next && cur->val == cur->next->val)
+      /* code */
+      while (cur->next && cur->next->val == cur->val)
       {
+        /* code */
         cur = cur->next;
       }
-      // cur 前进了
+
       if (pre->next != cur)
       {
-        // 删除重复项
         pre->next = cur->next;
-
-        // 完成操作，pre 前往下一节点
       }
       else
       {
-        // 无重复项，pre 前往下一节点
         pre = pre->next;
       }
       cur = cur->next;
     }
+
     return dummy->next;
   }
 };
