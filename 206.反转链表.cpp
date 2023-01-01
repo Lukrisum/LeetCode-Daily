@@ -28,42 +28,19 @@ struct ListNode
  */
 class Solution
 {
+private:
 public:
   ListNode *reverseList(ListNode *head)
   {
-    // stack<int> tempNums;
-
-    // while (head != nullptr)
-    // {
-    //   /* code */
-    //   tempNums.push(head->val);
-    //   head = head->next;
-    // }
-
-    // ListNode *resHead = new ListNode(-1);
-    // ListNode *optionHead = resHead;
-    // while (tempNums.size() > 0)
-    // {
-    //   /* code */
-    //   int temp = tempNums.top();
-    //   tempNums.pop();
-
-    //   optionHead->next = new ListNode(temp);
-    //   optionHead = optionHead->next;
-    // }
-
-    // return resHead->next;
-    ListNode *prev = nullptr;
-    ListNode *curr = head;
-    while (curr != nullptr)
+    if (head == nullptr || head->next == nullptr)
     {
-      /* code */
-      ListNode *next = curr->next;
-      curr->next = prev;
-      prev = curr;
-      curr = next;
+      return head;
     }
-    return prev;
+    
+    ListNode * reversedHead = reverseList(head->next);
+    head->next->next = head;
+    head->next = nullptr;
+    return reversedHead;
   }
 };
 
