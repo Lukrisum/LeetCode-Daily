@@ -26,35 +26,32 @@ struct ListNode
 class Solution
 {
 public:
-  void dfs(vector<vector<int>> &rooms, int key, unordered_set<int> &s)
+  int num;
+
+  void dfs(vector<vector<int>> &rooms, int key)
   {
+    rooms[key].push_back(-1);
+    num++;
+
     for (auto &&_key : rooms[key])
     {
-      if (s.count(_key) == 0)
+      if (_key == -1)
       {
-        s.insert(_key);
-        dfs(rooms, _key, s);
+        return;
+      }
+
+      int len = rooms[_key].size();
+      if (len == 0 || rooms[_key][len - 1] != -1)
+      {
+        dfs(rooms, _key);
       }
     }
   }
 
   bool canVisitAllRooms(vector<vector<int>> &rooms)
   {
-    unordered_set<int> s;
-
-    s.insert(0);
-    dfs(rooms, 0, s);
-
-    for (int i = 0; i < rooms.size(); i++)
-    {
-      /* code */
-      if (s.count(i) == 0)
-      {
-        return false;
-      }
-    }
-
-    return true;
+    dfs(rooms, 0);
+    return num == rooms.size();
   }
 };
 // @lc code=end
