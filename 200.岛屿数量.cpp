@@ -11,79 +11,36 @@ class Solution
 public:
   int numIslands(vector<vector<char>> &grid)
   {
-    int isLandCount = 0;
-
-    queue<vector<int>> q;
-
-    int row = 0;
-    int col = 0;
-
-    q.push({row, col});
-
-    while (!q.empty())
+    int m = grid.size(), n = m ? grid[0].size() : 0, islands = 0, offsets[] = {0, 1, 0, -1, 0};
+    for (int i = 0; i < m; ++i)
     {
-      vector<int> tempPos = q.front();
-      q.pop();
-
-      int r = tempPos[0];
-      int c = tempPos[1];
-
-      if (grid[r][c] == '1')
+      for (int j = 0; j < n; ++j)
       {
-        grid[r][c] = '2';
-
-        isLandCount++;
-
-        queue<vector<int>> qInner;
-        qInner.push({r, c});
-
-        while (!qInner.empty())
+        if (grid[i][j] == '1')
         {
-          vector<int> tempPos = qInner.front();
-          qInner.pop();
-
-          int rInner = tempPos[0];
-          int cInner = tempPos[1];
-
-          if (rInner < grid.size() - 1 && grid[rInner + 1][cInner] == '1')
+          islands++;
+          grid[i][j] = '2';
+          queue<pair<int, int>> q;
+          q.push({i, j});
+          while (!q.empty())
           {
-            grid[rInner + 1][cInner] = '2';
-            qInner.push({rInner + 1, cInner});
-          }
-
-          if (cInner < grid[0].size() - 1 && grid[rInner][cInner + 1] == '1')
-          {
-            grid[rInner][cInner + 1] = '2';
-            qInner.push({rInner, cInner + 1});
-          }
-
-          if (rInner > 0 && grid[rInner - 1][cInner] == '1')
-          {
-            grid[rInner - 1][cInner] = '2';
-            qInner.push({rInner - 1, cInner});
-          }
-
-          if (cInner > 0 && grid[rInner][cInner - 1] == '1')
-          {
-            grid[rInner][cInner - 1] = '2';
-            qInner.push({rInner, cInner - 1});
+            pair<int, int> p = q.front();
+            q.pop();
+            for (int k = 0; k < 4; k++)
+            {
+              int r = p.first + offsets[k];
+              int c = p.second + offsets[k + 1];
+              if (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] == '1')
+              {
+                grid[r][c] = '2';
+                q.push({r, c});
+              }
+            }
           }
         }
       }
-
-      if (r < grid.size() - 1)
-      {
-        q.push({r + 1, c});
-      }
-
-      if (c < grid[0].size() - 1)
-      {
-        q.push({r, c + 1});
-      }
     }
-
-    return isLandCount;
+    return islands;
   }
 };
-
 // @lc code=end
