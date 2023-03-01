@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=162 lang=cpp
+ * @lc app=leetcode.cn id=451 lang=cpp
  *
- * [162] 寻找峰值
+ * [451] 根据字符出现频率排序
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,35 +22,48 @@ struct ListNode
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
 // @lc code=start
 class Solution
 {
 public:
-  int findPeakElement(vector<int> &nums)
+  string frequencySort(string s)
   {
-    if (nums.size() == 1)
+    unordered_map<char, int> mp;
+    for (auto &&c : s)
     {
-      return 0;
+      mp[c]++;
     }
 
-    int left = 0;
-    int right = nums.size() - 1;
-
-    while (left < right)
+    struct cmp
     {
-      int middle = left + (right - left) / 2;
-      if (nums[middle] < nums[middle + 1])
+      bool operator()(pair<char, int> &p1, pair<char, int> &p2)
       {
-        left = middle + 1;
+        return p1.second < p2.second;
       }
-      else
-      {
-        right = middle;
-      }
+    };
+
+    priority_queue<pair<char, int>, vector<pair<char, int>>, cmp> q;
+
+    for (auto &&i : mp)
+    {
+      q.push(i);
     }
 
-    return left;
+    string res;
+    while (!q.empty())
+    {
+      int count = q.top().second;
+      while (count > 0)
+      {
+        res += q.top().first;
+        count--;
+      }
+
+      q.pop();
+    }
+
+    return res;
   }
 };
-
 // @lc code=end
